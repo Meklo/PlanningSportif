@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="fr.utt.if26.planningsportif.MenuActivity">
+
+    <Button
+        android:id="@+id/listProgrammeBtnMenu"
+        android:layout_width="315dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.65"
+        android:text="@string/listProgrammeBtnMenu" />
+
+    <Button
+        android:id="@+id/nouveauProgrammeBtnMenu"
+        android:layout_width="315dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.65"
+        android:text="@string/nouveauProgrammeBtnMenu" />
+
+    <Button
+        android:id="@+id/aideBtnMenu"
+        android:layout_width="315dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.65"
+        android:text="@string/aideBtnMenu" />
+
+</LinearLayout>

@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">PlanningSportif</string>
     <string name="cbMain">Pizza ?</string>
+    <string name="listProgrammeBtnMenu">Mes Programmes</string>
+    <string name="nouveauProgrammeBtnMenu">Nouveau Programme</string>
+    <string name="aideBtnMenu">Aide</string>
+    <string name="muscuBtnSelection">Programme Musculation</string>
+    <string name="natationBtnSelection">Programme Natation</string>
 </resources>
