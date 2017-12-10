@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="fr.utt.if26.planningsportif.MenuActivity">
+    tools:context="fr.utt.if26.planningsportif.Activities.MenuActivity">
 
     <Button
         android:id="@+id/listProgrammeBtnMenu"
