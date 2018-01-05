@@ -19,4 +19,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/natationBtnSelection" />
+
+    <Button
+        android:id="@+id/tennisBtnSelection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tennisBtnSelection" />
+
+    <Button
+        android:id="@+id/basketBtnSelection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/basketBtnSelection" />
+
+    <Button
+        android:id="@+id/footBtnSelection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/footBtnSelection" />
+
+    <Button
+        android:id="@+id/waterPoloBtnSelection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/waterPoloBtnSelection" />
 </LinearLayout>

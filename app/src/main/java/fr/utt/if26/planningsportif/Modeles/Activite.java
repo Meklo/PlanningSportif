@@ -32,5 +32,9 @@ public abstract class Activite {
     public void setTitre(String titre) {
         this.titre = titre;
     }
+
+    public String toString(){
+        return id +" "+ titre;
+    }
 }
 

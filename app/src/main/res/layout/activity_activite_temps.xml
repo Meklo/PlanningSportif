@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fr.utt.if26.planningsportif.Activities.ActiviteTempsActivity">
+
+
+    <LinearLayout
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="15dp"
+        tools:layout_editor_absoluteY="-22dp">
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:text="Créer une nouvelle activité Temps" />
+
+        <LinearLayout
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Titre" />
+
+            <EditText
+                android:id="@+id/titreActiviteTpsEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Name" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Temps" />
+
+            <EditText
+                android:id="@+id/tempsActiviteEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="number" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnValiderActiviteTemps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/go" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

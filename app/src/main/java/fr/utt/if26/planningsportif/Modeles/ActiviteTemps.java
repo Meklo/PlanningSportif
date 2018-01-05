@@ -20,4 +20,12 @@ public class ActiviteTemps extends Activite {
     public void setTemps(int temps) {
         this.temps = temps;
     }
+
+    @Override
+    public String toString() {
+        String  msg = new String();
+        msg = super.toString();
+        msg += " temps : " + temps;
+        return msg;
+    }
 }

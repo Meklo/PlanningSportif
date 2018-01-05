@@ -30,4 +30,12 @@ public class ActiviteRepetition extends Activite {
     public void setSerie(int serie) {
         this.serie = serie;
     }
+
+    @Override
+    public String toString() {
+        String  msg = new String();
+        msg = super.toString();
+        msg += " repetition : " + repetition +" série : " + serie;
+        return msg;
+    }
 }

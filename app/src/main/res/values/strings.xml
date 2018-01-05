@@ -1,9 +1,17 @@
 <resources>
     <string name="app_name">PlanningSportif</string>
-    <string name="cbMain">Pizza ?</string>
+    <string name="nomDev">MARCELLIN Hugo   MOUGNE Adrian</string>
+    <string name="go">Lancer</string>
     <string name="listProgrammeBtnMenu">Mes Programmes</string>
     <string name="nouveauProgrammeBtnMenu">Nouveau Programme</string>
     <string name="aideBtnMenu">Aide</string>
     <string name="muscuBtnSelection">Programme Musculation</string>
     <string name="natationBtnSelection">Programme Natation</string>
+    <string name="tennisBtnSelection">Programme Tennis</string>
+    <string name="basketBtnSelection">Programme Basket</string>
+    <string name="footBtnSelection">Programme Foot</string>
+    <string name="waterPoloBtnSelection">Programme Waterpolo</string>
+    <string name="validerProgrammeBtnNouveauProg">Valider Programme</string>
+    <string name="activiteRepetBtnChoixActivite">Activité Répétition </string>
+    <string name="activiteTpsBtnChoixActivite">Activité Temps </string>
 </resources>

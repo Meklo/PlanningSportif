@@ -1,18 +1,19 @@
 package fr.utt.if26.planningsportif.Modeles;
 
-import java.sql.Date;
+import java.io.Serializable;
+import java.util.Date;
 import java.util.ArrayList;
 
 /**
  * Created by Meklo on 10/12/2017.
  */
 
-public class Programme {
+public class Programme implements Serializable{
 
     protected int id;
     protected  String titre;
     protected  TypeProgramme type;
-    protected Date dateCreation;
+    protected Date dateCreation; // ATTENTION LONG OU DATE ???
     protected ArrayList<Activite> listeActivites;
 
     public Programme(int id, String titre, TypeProgramme type, Date dateCreation, ArrayList<Activite> listeActivites) {
@@ -22,6 +23,16 @@ public class Programme {
         this.dateCreation = dateCreation;
         this.listeActivites = listeActivites;
     }
+
+    public Programme(int id, String titre) {
+        this.id = id;
+        this.titre = titre;
+        this.type = TypeProgramme.MUSCULATION;
+        this.dateCreation =  new Date();
+        this.listeActivites = new ArrayList<>();
+    }
+
+
 
     public int getId() {
         return id;
@@ -70,5 +81,11 @@ public class Programme {
     public void supprimerActivite(Activite activite){
         this.listeActivites.remove(activite);
     }
+
+    public String toString(){
+        return this.getId() + " " + this.getTitre() + " " + this.getType() + " " + this.getListeActivites();
+    }
+
+
 
 }
