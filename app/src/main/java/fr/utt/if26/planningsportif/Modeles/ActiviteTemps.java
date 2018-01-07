@@ -8,9 +8,10 @@ public class ActiviteTemps extends Activite {
 
     protected int temps; // temps en seconde
 
-    public ActiviteTemps(int id, String titre, int temps) {
-        super(id, titre);
+    public ActiviteTemps(int id, int programme_id, String titre, int temps) {
+        super(id, titre, programme_id);
         this.temps = temps;
+        this.type = "temps";
     }
 
     public int getTemps() {
