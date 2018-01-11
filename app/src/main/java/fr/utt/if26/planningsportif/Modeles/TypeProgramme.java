@@ -7,6 +7,8 @@ package fr.utt.if26.planningsportif.Modeles;
 public enum TypeProgramme {
     MUSCULATION,
     NATATION,
-    WATERPOLO,
-    ESCALADE
+    BASKET,
+    EQUITATION,
+    VELO,
+    FOOT,
 }

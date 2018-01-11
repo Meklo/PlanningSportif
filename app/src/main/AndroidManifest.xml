@@ -19,11 +19,11 @@
         <activity android:name=".Activities.MenuActivity" />
         <activity android:name=".Activities.SelectionSportActivity" />
         <activity android:name=".Activities.NouveauProgrammeActivity" />
-        <activity android:name=".Activities.NouveauProgrammeActivity" />
         <activity android:name=".Activities.ChoixActiviteActivity" />
         <activity android:name=".Activities.ActiviteTempsActivity" />
         <activity android:name=".Activities.ActiviteRepetitionActivity" />
-        <activity android:name=".Activities.ListProgrammeActivity"></activity>
+        <activity android:name=".Activities.ListProgrammeActivity" />
+        <activity android:name=".Activities.ActiviteOngletActivity"></activity>
     </application>
 
 </manifest>

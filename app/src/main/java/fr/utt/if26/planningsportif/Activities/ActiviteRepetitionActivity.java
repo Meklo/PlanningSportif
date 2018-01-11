@@ -43,7 +43,7 @@ public class ActiviteRepetitionActivity extends AppCompatActivity {
                 int repet = Integer.parseInt(repetActivite.getText().toString());
                 int serie = Integer.parseInt(serieActivite.getText().toString());
 
-                ActiviteRepetition activiteRepet = new ActiviteRepetition(1, titre, repet, serie);
+                ActiviteRepetition activiteRepet = new ActiviteRepetition(1,1, titre, repet, serie);
                // Log.d("aa", "bb");
                 Log.d("cc", activiteRepet.toString());
 

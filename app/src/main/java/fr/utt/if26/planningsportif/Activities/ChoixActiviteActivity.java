@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import fr.utt.if26.planningsportif.Modeles.Programme;
+import fr.utt.if26.planningsportif.Modeles.TypeProgramme;
 import fr.utt.if26.planningsportif.R;
 
 public class ChoixActiviteActivity extends AppCompatActivity {
@@ -16,12 +17,16 @@ public class ChoixActiviteActivity extends AppCompatActivity {
     Button activiteRep = null;
     Programme programmeEnCours = null;
 
+    TypeProgramme type= null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choix_activite);
 
         programmeEnCours = (Programme) getIntent().getSerializableExtra("programmeEnCours");
+        type = (TypeProgramme) getIntent().getSerializableExtra("type") ;
+
         activiteRep = (Button) findViewById(R.id.activiteRepetBtnChoixActivite);
         activiteTps =  (Button) findViewById(R.id.activiteTpsBtnChoixActivite);
 

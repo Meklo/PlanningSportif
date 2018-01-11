@@ -37,7 +37,7 @@ public class ActiviteTempsActivity extends AppCompatActivity {
                 String titre = titreActivite.getText().toString();
                 int temps = Integer.parseInt(tempsActivite.getText().toString());
 
-                ActiviteTemps activiteTps = new ActiviteTemps(1, titre, temps);
+                ActiviteTemps activiteTps = new ActiviteTemps(1, 1, titre, temps);
                 Log.d("aa", "bb");
                 Log.d("cc", activiteTps.toString());
 
