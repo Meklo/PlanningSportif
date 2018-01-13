@@ -12,8 +12,10 @@ import android.widget.Toast;
 
 import java.sql.Date;
 
+import fr.utt.if26.planningsportif.Modeles.ActiviteTemps;
 import fr.utt.if26.planningsportif.Modeles.Programme;
 import fr.utt.if26.planningsportif.Modeles.TypeProgramme;
+import fr.utt.if26.planningsportif.Persistence.ActivitePersistence;
 import fr.utt.if26.planningsportif.Persistence.ProgrammePersistence;
 import fr.utt.if26.planningsportif.R;
 
@@ -29,21 +31,27 @@ public class MainActivity extends AppCompatActivity {
 
         go = (Button)findViewById(R.id.btnGoMenu);
 
-      /*  SQLiteDatabase mydatabase = openOrCreateDatabase("ProgrammeSportif",MODE_PRIVATE,null);
+        SQLiteDatabase mydatabase = openOrCreateDatabase("ProgrammeSportif",MODE_PRIVATE,null);
 
         ProgrammePersistence programmePersistence = new ProgrammePersistence(getApplicationContext());
-        programmePersistence.deleteTable();
-        programmePersistence.onCreate(mydatabase);
-
-        Programme p = new Programme(5, "test");
+        //programmePersistence.deleteTable();
+       // programmePersistence.onCreate(mydatabase);
+         Programme p = new Programme(0, "testprg");
         programmePersistence.addProgramme(p);
 
        // Programme p2 = programmePersistence.getProgramme(1);
-        Log.d("test", programmePersistence.getAllProgrammes().get(0).getTitre());
+       // Log.d("test", programmePersistence.getAllProgrammes().get(0).getTitre());
+/**/
 
+
+       /* ActiviteTemps ac = new ActiviteTemps(1,1,"tot",15);
+
+        ActivitePersistence activitePersistence = new ActivitePersistence(getApplicationContext(), null, null, 1);
+        activitePersistence.onCreate(mydatabase);
+        activitePersistence.onOpen(mydatabase);
+        activitePersistence.addActiviteTemps(ac);
+        Log.d("ac ajout", "ok");
 */
-
-
 
 
 

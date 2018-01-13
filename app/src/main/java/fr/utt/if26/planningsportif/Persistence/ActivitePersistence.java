@@ -41,13 +41,13 @@ public class ActivitePersistence extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         final String table_programme_create =
                 "CREATE TABLE "+ TABLE_ACTIVITE + "(" +
-                        ATTRIBUT_ID + "INTEGER primary key, " +
-                        ATTRIBUT_PROGRAMME_ID + "INTEGER, " +
-                        ATTRIBUT_TITRE + "TEXT, " +
-                        ATTRIBUT_TYPE_ACTIVITE + "TEXT, " +
-                        ATTRIBUT_TEMPS + "TEXT, " +
-                        ATTRIBUT_SERIE + "TEXT, " +
-                        ATTRIBUT_REPETITION + "TEXT, " +
+                        ATTRIBUT_ID + " INTEGER PRIMARY KEY, " +
+                        ATTRIBUT_PROGRAMME_ID + " INTEGER, " +
+                        ATTRIBUT_TITRE + " TEXT, " +
+                        ATTRIBUT_TYPE_ACTIVITE + " TEXT, " +
+                        ATTRIBUT_TEMPS + " TEXT, " +
+                        ATTRIBUT_SERIE + " TEXT, " +
+                        ATTRIBUT_REPETITION + " TEXT, " +
                         "FOREIGN KEY (" + ATTRIBUT_PROGRAMME_ID + ") REFERENCES "+ TABLE_PROGRAMME + "(" + ATTRIBUT_ID + ")"+
                         ")";
         db.execSQL(table_programme_create);
@@ -59,7 +59,7 @@ public class ActivitePersistence extends SQLiteOpenHelper {
 
     }
 
-    void addActiviteTemps(ActiviteTemps activite) {
+    public void addActiviteTemps(ActiviteTemps activite) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -73,7 +73,7 @@ public class ActivitePersistence extends SQLiteOpenHelper {
         db.close();
     }
 
-    void addActiviteRepetition(ActiviteRepetition activite) {
+    public void addActiviteRepetition(ActiviteRepetition activite) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();

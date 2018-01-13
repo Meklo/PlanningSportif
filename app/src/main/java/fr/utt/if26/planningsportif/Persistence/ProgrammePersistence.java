@@ -23,31 +23,31 @@ public class ProgrammePersistence extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "programme_sportif.db";
     public static final String TABLE_PROGRAMME = "programme";
     public static final String ATTRIBUT_TITRE = "titre";
-    public static final String ATTRIBUT_ID = "id";
-    public static final String ATTRIBUT_TYPE = "type";
-    public static final String ATTRIBUT_DATE_CREATION = "datecreation";
+    public static final String ATTRIBUT_ID = "_id";
+    public static final String ATTRIBUT_TYPE = "typeprg";
+    public static final String ATTRIBUT_DATE_CREATION = "creation";
+
 
 
     public ProgrammePersistence(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
 
+
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        try {
-        final String table_programme_create =
+        /*String table_programme_create =
                 "CREATE TABLE "+ TABLE_PROGRAMME + "(" +
-                ATTRIBUT_ID + " INTEGER PRIMARY KEY," +
-                ATTRIBUT_TITRE + " TEXT," +
-                ATTRIBUT_TYPE + " TEXT," +
-                ATTRIBUT_DATE_CREATION + " TEXT" +
-                ")";
+                ATTRIBUT_ID + " INTEGER PRIMARY KEY, " +
+                ATTRIBUT_TITRE + " TEXT, " +
+                ATTRIBUT_TYPE + " TEXT, " +
+                ATTRIBUT_DATE_CREATION + " TEXT " +
+                ");"; */
+            String table_programme_create = "CREATE TABLE IF NOT EXISTS programme(_id INTEGER PRIMARY KEY AUTOINCREMENT, TITRE TEXT, TYPEPROG TEXT, CREATION TEXT);";
+            db.execSQL(table_programme_create);
+            Log.d("table cree","ok");
 
-        db.execSQL(table_programme_create);
-        } catch(Exception e){
-            Log.e("Base de donnees", e.getMessage());
-        }
     }
 
     @Override
@@ -57,14 +57,19 @@ public class ProgrammePersistence extends SQLiteOpenHelper {
 
     public void addProgramme(Programme programme) {
         try {
+            Log.d("rentre ds Add", "ok");
         SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(ATTRIBUT_TITRE, programme.getTitre());
-        values.put(ATTRIBUT_TYPE, programme.getType().toString()); // Contact Name
-        values.put(ATTRIBUT_DATE_CREATION, "test"); // Contact Phone
+        this.onOpen(db);
+            ContentValues values = new ContentValues();
+        values.put("TITRE", "tests");
+        values.put("TYPEPROG", programme.getType().toString()); // Contact Name
+        values.put("CREATION", "test"); // Contact Phone
 
-        db.insert(TABLE_PROGRAMME, null, values);
+                Log.d(values.toString(),"ok");
+
+         db.insert(TABLE_PROGRAMME, null, values);
+            Log.d("insertion ok", "ok");
         db.close(); // Closing database connection
         } catch(Exception e){
             Log.e("Base de donnees", e.getMessage());
@@ -122,8 +127,13 @@ public class ProgrammePersistence extends SQLiteOpenHelper {
     }
 
     public void deleteTable() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_PROGRAMME, null, null);
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            db.delete(TABLE_PROGRAMME, null, null);
+            Log.d("table sup", "ok");
+        }catch (Exception e){
+                Log.i("table non suppr", e.getMessage());
+             }
     }
 
     @Override
@@ -134,6 +144,7 @@ public class ProgrammePersistence extends SQLiteOpenHelper {
             db.execSQL("PRAGMA foreign_keys=ON;");
         }
     }
+
 
 }
 
