@@ -90,7 +90,8 @@ public class ProgrammePersistence extends SQLiteOpenHelper {
                 cursor.moveToFirst();
 
             Programme programme = new Programme(Integer.parseInt(cursor.getString(0)),
-                    cursor.getString(1), TypeProgramme.valueOf(cursor.getString(2)), cursor.getString(3), null);
+                    cursor.getString(1), TypeProgramme.valueOf(cursor.getString(2)), cursor.getString(3), null); // a changer pour afficher les activités
+            db.close();
             // return contact
             return programme;
 

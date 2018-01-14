@@ -102,15 +102,17 @@ public class NouveauProgrammeActivity extends AppCompatActivity {
                 //L'utilisateur sélectionne un sport --> changement de page
                // if (sportSelectionne > -1 && sportSelectionne < 6) {
                 if (type != null){
-                    String titre = titreEdit.getText().toString();
-                    Programme p = new Programme(1, titre); //INSERER PROGRAMME DS BDD;
+                    //try {
+                        String titre = titreEdit.getText().toString();
+                        Programme p = new Programme(1, titre); //INSERER PROGRAMME DS BDD;
 
-                   // Toast.makeText(getApplicationContext(), "Programme créé  !", Toast.LENGTH_LONG).show();
+                        // Toast.makeText(getApplicationContext(), "Programme créé  !", Toast.LENGTH_LONG).show();
 
-                    Intent myIntent = new Intent(view.getContext(), ChoixActiviteActivity.class);
-                    myIntent.putExtra("type", type); //TYPE ACTIVITE
-                    myIntent.putExtra("programmeEnCours", p);
-                    startActivityForResult(myIntent, 0);
+                        Intent myIntent = new Intent(view.getContext(), ChoixActiviteActivity.class);
+                        myIntent.putExtra("type", type); //TYPE ACTIVITE
+                        myIntent.putExtra("programmeEnCours", p);
+                        startActivityForResult(myIntent, 0);
+                   // } catch ()
                 }
                 //L'utilisateur n'a pas sélectionné de sport --> retour sur la page
                 else {

@@ -23,7 +23,8 @@
         <activity android:name=".Activities.ActiviteTempsActivity" />
         <activity android:name=".Activities.ActiviteRepetitionActivity" />
         <activity android:name=".Activities.ListProgrammeActivity" />
-        <activity android:name=".Activities.ActiviteOngletActivity"></activity>
+        <activity android:name=".Activities.ActiviteOngletActivity" />
+        <activity android:name=".Activities.ActiviteRecapActivity"></activity>
     </application>
 
 </manifest>

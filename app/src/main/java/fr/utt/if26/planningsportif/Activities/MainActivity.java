@@ -11,6 +11,8 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 
 import fr.utt.if26.planningsportif.Modeles.ActiviteTemps;
 import fr.utt.if26.planningsportif.Modeles.Programme;
@@ -35,11 +37,22 @@ public class MainActivity extends AppCompatActivity {
         programmePersistence.deleteTable();
         programmePersistence.onCreate(null);
 
-        Programme p = new Programme(1, "testprg");
+        Programme p = new Programme(1, "Adrian");
+        Programme prg = new Programme(2, "Hugo");
+
         programmePersistence.addProgramme(p);
+        programmePersistence.addProgramme(prg);
 
         Programme p2 = programmePersistence.getProgramme(1);
+        Log.d("BD", p2.getId() +" ");
         Log.d("BD", p2.getDateCreation());
+
+       // Date date = new Date(Integer.parseInt(p.getDateCreation()));
+       // Log.d("BD", date.toString());
+
+        ArrayList listPrg = programmePersistence.getAllProgrammes();
+        Log.d("liste", listPrg.toString());
+        Log.d("liste", listPrg.size() +" ");
 
 
 
@@ -52,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("ac ajout", "ok");
 */
 
+        Log.d("Main activite","ok");
 
 
         btnCliqued();

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">PlanningSportif</string>
     <string name="nomDev">MARCELLIN Hugo   MOUGNE Adrian</string>
-    <string name="go">Lancer</string>
+    <string name="go">Ajouter Activité</string>
     <string name="listProgrammeBtnMenu">Mes Programmes</string>
     <string name="nouveauProgrammeBtnMenu">Nouveau Programme</string>
     <string name="aideBtnMenu">Aide</string>

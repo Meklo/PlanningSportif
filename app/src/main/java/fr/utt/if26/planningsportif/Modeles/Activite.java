@@ -1,5 +1,6 @@
 package fr.utt.if26.planningsportif.Modeles;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 
@@ -7,7 +8,7 @@ import java.util.ArrayList;
  * Created by Meklo on 10/12/2017.
  */
 
-public abstract class Activite {
+public abstract class Activite implements Serializable{
 
     protected int id;
     protected  String titre;
@@ -37,8 +38,8 @@ public abstract class Activite {
     }
 
     public String toString(){
-        return id +" "+ titre;
-    }
+        return id +") "+ titre + " - ";
+    } //POSSIBILITe DE SUPPRIMER L ID POUR UN MEILLEUR RENDU
 
     public String getType() {
         return type;

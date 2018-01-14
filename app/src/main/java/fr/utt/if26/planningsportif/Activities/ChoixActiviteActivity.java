@@ -15,6 +15,8 @@ public class ChoixActiviteActivity extends AppCompatActivity {
 
     Button activiteTps = null;
     Button activiteRep = null;
+    Button validerToutesActivités;
+
     Programme programmeEnCours = null;
 
     TypeProgramme type= null;
@@ -29,12 +31,14 @@ public class ChoixActiviteActivity extends AppCompatActivity {
 
         activiteRep = (Button) findViewById(R.id.activiteRepetBtnChoixActivite);
         activiteTps =  (Button) findViewById(R.id.activiteTpsBtnChoixActivite);
+        validerToutesActivités = (Button) findViewById(R.id.validerToutesActivités);
 
         //activiteRepet
         activiteRep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(view.getContext(), ActiviteRepetitionActivity.class);
+                myIntent.putExtra("type", type); //TYPE ACTIVITE
                 myIntent.putExtra("programmeEnCours", programmeEnCours);
                 startActivityForResult(myIntent, 0);
             }
@@ -45,6 +49,17 @@ public class ChoixActiviteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(view.getContext(), ActiviteTempsActivity.class);
+                myIntent.putExtra("type", type); //TYPE ACTIVITE
+                myIntent.putExtra("programmeEnCours", programmeEnCours);
+                startActivityForResult(myIntent, 0);
+            }
+        });
+
+        validerToutesActivités.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(view.getContext(), ActiviteRecapActivity.class);
+                myIntent.putExtra("type", type); //TYPE ACTIVITE
                 myIntent.putExtra("programmeEnCours", programmeEnCours);
                 startActivityForResult(myIntent, 0);
             }

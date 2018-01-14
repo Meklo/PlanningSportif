@@ -1,6 +1,7 @@
 package fr.utt.if26.planningsportif.Modeles;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.ArrayList;
 
@@ -25,12 +26,16 @@ public class Programme implements Serializable{
     }
 
     public Programme(int id, String titre) {
-        Long timeStamp = System.currentTimeMillis()/1000;
+        //Long timeStamp = System.currentTimeMillis()/1000;
+
+        Timestamp time = new Timestamp(System.currentTimeMillis());
+        Date date = new Date(time.getTime());
+
 
         this.id = id;
         this.titre = titre;
         this.type = TypeProgramme.MUSCULATION;
-        this.dateCreation =  timeStamp.toString();
+        this.dateCreation =  date.toString();
         this.listeActivites = new ArrayList<>();
     }
 
@@ -85,7 +90,7 @@ public class Programme implements Serializable{
     }
 
     public String toString(){
-        return this.getId() + " " + this.getTitre() + " " + this.getType() + " " + this.getListeActivites();
+        return  this.getId() + ") " + this.getTitre() + " - " + this.getType() + " \n" + this.getDateCreation() + "\n\n" + this.getListeActivites();
     }
 
 

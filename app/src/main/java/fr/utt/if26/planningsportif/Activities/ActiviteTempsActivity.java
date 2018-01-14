@@ -1,30 +1,40 @@
 package fr.utt.if26.planningsportif.Activities;
 
+import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.Serializable;
+
 import fr.utt.if26.planningsportif.Modeles.ActiviteTemps;
 import fr.utt.if26.planningsportif.Modeles.Programme;
+import fr.utt.if26.planningsportif.Modeles.TypeProgramme;
 import fr.utt.if26.planningsportif.R;
 
 public class ActiviteTempsActivity extends AppCompatActivity {
 
     Programme programmeEnCours = null;
+    TypeProgramme type = null;
+
     EditText titreActivite;
     EditText tempsActivite;
     Button valider;
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activite_temps);
 
         programmeEnCours = (Programme) getIntent().getSerializableExtra("programmeEnCours");
+        type = (TypeProgramme) getIntent().getSerializableExtra("type") ;
+
 
         titreActivite = (EditText) findViewById(R.id.titreActiviteTpsEditText);
         tempsActivite = (EditText) findViewById(R.id.tempsActiviteEditText);
@@ -42,12 +52,16 @@ public class ActiviteTempsActivity extends AppCompatActivity {
                 Log.d("cc", activiteTps.toString());
 
                 programmeEnCours.ajouterActivite(activiteTps);
-                Log.d("activité ajoutée", "activité ajoutée");
+                Log.d(programmeEnCours.toString(), "activité ajoutée");
                 Toast.makeText(getApplicationContext(), "Activité ajoutée !", Toast.LENGTH_LONG).show();
+
+
+                Intent myIntent = new Intent(view.getContext(), ChoixActiviteActivity.class);
+                myIntent.putExtra("type", type); //TYPE ACTIVITE
+                myIntent.putExtra("programmeEnCours", programmeEnCours);
+                 startActivityForResult(myIntent, 0);
 
             }
         });
-
-
     }
 }

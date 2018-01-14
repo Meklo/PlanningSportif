@@ -1,10 +1,12 @@
 package fr.utt.if26.planningsportif.Modeles;
 
+import java.io.Serializable;
+
 /**
  * Created by Meklo on 10/12/2017.
  */
 
-public class ActiviteTemps extends Activite {
+public class ActiviteTemps extends Activite implements Serializable{
 
     protected int temps; // temps en seconde
 
