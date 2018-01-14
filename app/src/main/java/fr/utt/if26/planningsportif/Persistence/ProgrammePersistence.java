@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.format.DateFormat;
 import android.util.Log;
 
 import fr.utt.if26.planningsportif.Modeles.Programme;
@@ -23,8 +24,8 @@ public class ProgrammePersistence extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "programme_sportif.db";
     public static final String TABLE_PROGRAMME = "programme";
     public static final String ATTRIBUT_TITRE = "titre";
-    public static final String ATTRIBUT_ID = "_id";
-    public static final String ATTRIBUT_TYPE = "typeprg";
+    public static final String ATTRIBUT_ID = "id";
+    public static final String ATTRIBUT_TYPE = "typeprogramme";
     public static final String ATTRIBUT_DATE_CREATION = "creation";
 
 
@@ -37,16 +38,21 @@ public class ProgrammePersistence extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        /*String table_programme_create =
-                "CREATE TABLE "+ TABLE_PROGRAMME + "(" +
-                ATTRIBUT_ID + " INTEGER PRIMARY KEY, " +
-                ATTRIBUT_TITRE + " TEXT, " +
-                ATTRIBUT_TYPE + " TEXT, " +
-                ATTRIBUT_DATE_CREATION + " TEXT " +
-                ");"; */
-            String table_programme_create = "CREATE TABLE IF NOT EXISTS programme(_id INTEGER PRIMARY KEY AUTOINCREMENT, TITRE TEXT, TYPEPROG TEXT, CREATION TEXT);";
+        db = this.getWritableDatabase();
+        try {
+            String table_programme_create =
+                    "CREATE TABLE IF NOT EXISTS " + TABLE_PROGRAMME + "(" +
+                            ATTRIBUT_ID + " INTEGER PRIMARY KEY, " +
+                            ATTRIBUT_TITRE + " TEXT, " +
+                            ATTRIBUT_TYPE + " TEXT, " +
+                            ATTRIBUT_DATE_CREATION + " TEXT " +
+                            ");";
+            //String table_programme_create = "CREATE TABLE IF NOT EXISTS programme(_id INTEGER PRIMARY KEY AUTOINCREMENT, TITRE TEXT, TYPEPROG TEXT, CREATION TEXT);";
             db.execSQL(table_programme_create);
-            Log.d("table cree","ok");
+            Log.d("table cree", "ok");
+        } catch (Exception exception){
+            Log.e("BD",exception.getMessage());
+        }
 
     }
 
@@ -57,22 +63,19 @@ public class ProgrammePersistence extends SQLiteOpenHelper {
 
     public void addProgramme(Programme programme) {
         try {
-            Log.d("rentre ds Add", "ok");
-        SQLiteDatabase db = this.getWritableDatabase();
+            SQLiteDatabase db = this.getWritableDatabase();
+            this.onOpen(db);
 
-        this.onOpen(db);
             ContentValues values = new ContentValues();
-        values.put("TITRE", "tests");
-        values.put("TYPEPROG", programme.getType().toString()); // Contact Name
-        values.put("CREATION", "test"); // Contact Phone
+            values.put(ATTRIBUT_TITRE, programme.getTitre());
+            values.put(ATTRIBUT_TYPE, programme.getType().toString());
+            values.put(ATTRIBUT_DATE_CREATION, programme.getDateCreation());
 
-                Log.d(values.toString(),"ok");
-
-         db.insert(TABLE_PROGRAMME, null, values);
-            Log.d("insertion ok", "ok");
-        db.close(); // Closing database connection
+            db.insert(TABLE_PROGRAMME, null, values);
+            Log.d("BD", "programme insere");
+            db.close();
         } catch(Exception e){
-            Log.e("Base de donnees", e.getMessage());
+            Log.e("BD", e.getMessage());
         }
     }
 
@@ -87,7 +90,7 @@ public class ProgrammePersistence extends SQLiteOpenHelper {
                 cursor.moveToFirst();
 
             Programme programme = new Programme(Integer.parseInt(cursor.getString(0)),
-                    cursor.getString(1), TypeProgramme.valueOf(cursor.getString(2)), new SimpleDateFormat("dd/MM/yyyy").parse(cursor.getString(3)), null);
+                    cursor.getString(1), TypeProgramme.valueOf(cursor.getString(2)), cursor.getString(3), null);
             // return contact
             return programme;
 
@@ -109,7 +112,7 @@ public class ProgrammePersistence extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                Programme programme = new Programme(cursor.getInt(0), cursor.getString(1));
+                Programme programme = new Programme(cursor.getInt(0), cursor.getString(1), TypeProgramme.valueOf(cursor.getString(2)), cursor.getString(3), null);
                 // Adding contact to list
                 programmeList.add(programme);
             } while (cursor.moveToNext());
@@ -123,16 +126,17 @@ public class ProgrammePersistence extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_PROGRAMME, ATTRIBUT_ID + " = ?",
                 new String[] { String.valueOf(programme.getId()) });
+        Log.d("BD", "programme supprime");
         db.close();
     }
 
     public void deleteTable() {
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            db.delete(TABLE_PROGRAMME, null, null);
-            Log.d("table sup", "ok");
+            db.execSQL("DROP TABLE IF EXISTS "+ TABLE_PROGRAMME);
+            Log.d("BD", "table programme supprime");
         }catch (Exception e){
-                Log.i("table non suppr", e.getMessage());
+                Log.i("BD", e.getMessage());
              }
     }
 

@@ -33,12 +33,13 @@ public class ActivitePersistence extends SQLiteOpenHelper {
 
     public static final String TABLE_PROGRAMME = "programme";
 
-    public ActivitePersistence(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public ActivitePersistence(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db = this.getWritableDatabase();
         final String table_programme_create =
                 "CREATE TABLE "+ TABLE_ACTIVITE + "(" +
                         ATTRIBUT_ID + " INTEGER PRIMARY KEY, " +
@@ -60,32 +61,43 @@ public class ActivitePersistence extends SQLiteOpenHelper {
     }
 
     public void addActiviteTemps(ActiviteTemps activite) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(ATTRIBUT_PROGRAMME_ID, activite.getProgramme_id());
-        values.put(ATTRIBUT_TITRE, activite.getTitre());
-        values.put(ATTRIBUT_TYPE_ACTIVITE, activite.getType());
-        values.put(ATTRIBUT_TEMPS, activite.getTemps());
-        values.put(ATTRIBUT_REPETITION,  0);
-        values.put(ATTRIBUT_SERIE, 0);
-        db.insert(TABLE_ACTIVITE, null, values);
-        db.close();
+            ContentValues values = new ContentValues();
+            values.put(ATTRIBUT_PROGRAMME_ID, activite.getProgramme_id());
+            values.put(ATTRIBUT_TITRE, activite.getTitre());
+            values.put(ATTRIBUT_TYPE_ACTIVITE, activite.getType());
+            values.put(ATTRIBUT_TEMPS, activite.getTemps());
+            values.put(ATTRIBUT_REPETITION, 0);
+            values.put(ATTRIBUT_SERIE, 0);
+            db.insert(TABLE_ACTIVITE, null, values);
+
+            Log.d("BD", "activite temps insere");
+        } catch (Exception e){
+            Log.e("BD", e.getMessage());
+        }
     }
 
     public void addActiviteRepetition(ActiviteRepetition activite) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(ATTRIBUT_PROGRAMME_ID, activite.getProgramme_id());
-        values.put(ATTRIBUT_TITRE, activite.getTitre());
-        values.put(ATTRIBUT_TYPE_ACTIVITE, activite.getType());
-        values.put(ATTRIBUT_TEMPS,  activite.getSerie());
-        values.put(ATTRIBUT_REPETITION,  activite.getRepetition());
-        values.put(ATTRIBUT_SERIE, activite.getSerie());
-        values.put(ATTRIBUT_TEMPS, 0);
-        db.insert(TABLE_ACTIVITE, null, values);
-        db.close();
+            ContentValues values = new ContentValues();
+            values.put(ATTRIBUT_PROGRAMME_ID, activite.getProgramme_id());
+            values.put(ATTRIBUT_TITRE, activite.getTitre());
+            values.put(ATTRIBUT_TYPE_ACTIVITE, activite.getType());
+            values.put(ATTRIBUT_TEMPS, activite.getSerie());
+            values.put(ATTRIBUT_REPETITION, activite.getRepetition());
+            values.put(ATTRIBUT_SERIE, activite.getSerie());
+            values.put(ATTRIBUT_TEMPS, 0);
+            db.insert(TABLE_ACTIVITE, null, values);
+            db.close();
+            Log.d("BD", "activite repetition insere");
+
+        } catch (Exception e){
+            Log.e("BD", e.getMessage());
+        }
     }
 
     Activite getActivite(int id) {
@@ -108,7 +120,7 @@ public class ActivitePersistence extends SQLiteOpenHelper {
 
             return null;
         } catch (Exception e){
-            Log.i("Base de données", e.getMessage());
+            Log.e("BD", e.getMessage());
             return null;
         }
     }

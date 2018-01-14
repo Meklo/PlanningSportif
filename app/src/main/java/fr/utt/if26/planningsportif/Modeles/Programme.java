@@ -13,10 +13,10 @@ public class Programme implements Serializable{
     protected int id;
     protected  String titre;
     protected  TypeProgramme type;
-    protected Date dateCreation; // ATTENTION LONG OU DATE ???
+    protected String dateCreation;
     protected ArrayList<Activite> listeActivites;
 
-    public Programme(int id, String titre, TypeProgramme type, Date dateCreation, ArrayList<Activite> listeActivites) {
+    public Programme(int id, String titre, TypeProgramme type, String dateCreation, ArrayList<Activite> listeActivites) {
         this.id = id;
         this.titre = titre;
         this.type = type;
@@ -25,10 +25,12 @@ public class Programme implements Serializable{
     }
 
     public Programme(int id, String titre) {
+        Long timeStamp = System.currentTimeMillis()/1000;
+
         this.id = id;
         this.titre = titre;
         this.type = TypeProgramme.MUSCULATION;
-        this.dateCreation =  new Date();
+        this.dateCreation =  timeStamp.toString();
         this.listeActivites = new ArrayList<>();
     }
 
@@ -58,11 +60,11 @@ public class Programme implements Serializable{
         this.type = type;
     }
 
-    public Date getDateCreation() {
+    public String getDateCreation() {
         return dateCreation;
     }
 
-    public void setDateCreation(Date dateCreation) {
+    public void setDateCreation(String dateCreation) {
         this.dateCreation = dateCreation;
     }
 

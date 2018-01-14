@@ -31,17 +31,16 @@ public class MainActivity extends AppCompatActivity {
 
         go = (Button)findViewById(R.id.btnGoMenu);
 
-        SQLiteDatabase mydatabase = openOrCreateDatabase("ProgrammeSportif",MODE_PRIVATE,null);
-
         ProgrammePersistence programmePersistence = new ProgrammePersistence(getApplicationContext());
-        //programmePersistence.deleteTable();
-       // programmePersistence.onCreate(mydatabase);
-         Programme p = new Programme(0, "testprg");
+        programmePersistence.deleteTable();
+        programmePersistence.onCreate(null);
+
+        Programme p = new Programme(1, "testprg");
         programmePersistence.addProgramme(p);
 
-       // Programme p2 = programmePersistence.getProgramme(1);
-       // Log.d("test", programmePersistence.getAllProgrammes().get(0).getTitre());
-/**/
+        Programme p2 = programmePersistence.getProgramme(1);
+        Log.d("BD", p2.getDateCreation());
+
 
 
        /* ActiviteTemps ac = new ActiviteTemps(1,1,"tot",15);
