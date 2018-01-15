@@ -30,10 +30,13 @@ public class ProgrammePersistence extends SQLiteOpenHelper {
     public static final String ATTRIBUT_DATE_CREATION = "creation";
 
     ActivitePersistence activitePersistence;
+    MCrypt mcrypt;
+
 
     public ProgrammePersistence(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         activitePersistence = new ActivitePersistence(context);
+        mcrypt = new MCrypt();
     }
 
     @Override
@@ -71,8 +74,8 @@ public class ProgrammePersistence extends SQLiteOpenHelper {
             String formattedDate = df.format(c.getTime());
 
             ContentValues values = new ContentValues();
-            values.put(ATTRIBUT_TITRE, programme.getTitre());
-            values.put(ATTRIBUT_TYPE, programme.getType().toString());
+            values.put(ATTRIBUT_TITRE,  mcrypt.byteArrayToHexString(mcrypt.encrypt(programme.getTitre())));
+            values.put(ATTRIBUT_TYPE, mcrypt.byteArrayToHexString(mcrypt.encrypt(programme.getType().toString())));
             values.put(ATTRIBUT_DATE_CREATION, formattedDate);
 
             db.insert(TABLE_PROGRAMME, null, values);
@@ -94,7 +97,7 @@ public class ProgrammePersistence extends SQLiteOpenHelper {
                 cursor.moveToFirst();
 
             Programme programme = new Programme(Integer.parseInt(cursor.getString(0)),
-                    cursor.getString(1), TypeProgramme.valueOf(cursor.getString(2)), cursor.getString(3), null); // a changer pour afficher les activités
+                    new String(mcrypt.decrypt(cursor.getString(1))).trim(), TypeProgramme.valueOf(new String(mcrypt.decrypt(cursor.getString(2))).trim()), cursor.getString(3), null); // a changer pour afficher les activités
             db.close();
             // return contact
             return programme;
@@ -107,6 +110,7 @@ public class ProgrammePersistence extends SQLiteOpenHelper {
     }
 
     public ArrayList<Programme> getAllProgrammes() {
+        try {
         ArrayList<Programme> programmeList = new ArrayList<Programme>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_PROGRAMME;
@@ -117,7 +121,7 @@ public class ProgrammePersistence extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                Programme programme = new Programme(cursor.getInt(0), cursor.getString(1), TypeProgramme.valueOf(cursor.getString(2)), cursor.getString(3), activitePersistence.getActiviteFromProgramme(cursor.getInt(0)));
+                Programme programme = new Programme(cursor.getInt(0), new String(mcrypt.decrypt(cursor.getString(1))).trim(), TypeProgramme.valueOf(new String(mcrypt.decrypt(cursor.getString(2))).trim()), cursor.getString(3), activitePersistence.getActiviteFromProgramme(cursor.getInt(0)));
                 // Adding contact to list
                 programmeList.add(programme);
             } while (cursor.moveToNext());
@@ -125,6 +129,11 @@ public class ProgrammePersistence extends SQLiteOpenHelper {
 
         // return contact list
         return programmeList;
+
+    } catch (Exception e){
+        Log.i("Base de données", e.getMessage());
+        return null;
+    }
     }
 
     public void deleteProgramme(Programme programme) {
@@ -138,6 +147,7 @@ public class ProgrammePersistence extends SQLiteOpenHelper {
     public void deleteTable() {
         try {
             SQLiteDatabase db = this.getWritableDatabase();
+            db.execSQL("delete from "+ TABLE_PROGRAMME);
             db.execSQL("DROP TABLE IF EXISTS "+ TABLE_PROGRAMME);
             Log.d("BD", "table programme supprime");
         }catch (Exception e){

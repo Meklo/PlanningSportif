@@ -35,9 +35,12 @@ public class ActivitePersistence extends SQLiteOpenHelper {
     public static final String ATTRIBUT_REPETITION = "repetition";
 
     public static final String TABLE_PROGRAMME = "programme";
+    MCrypt mcrypt;
+
 
     public ActivitePersistence(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        mcrypt = new MCrypt();
     }
 
     @Override
@@ -69,8 +72,8 @@ public class ActivitePersistence extends SQLiteOpenHelper {
 
             ContentValues values = new ContentValues();
             values.put(ATTRIBUT_PROGRAMME_ID, activite.getProgramme_id());
-            values.put(ATTRIBUT_TITRE, activite.getTitre());
-            values.put(ATTRIBUT_TYPE_ACTIVITE, activite.getType());
+            values.put(ATTRIBUT_TITRE, mcrypt.encrypt(activite.getTitre()));
+            values.put(ATTRIBUT_TYPE_ACTIVITE, mcrypt.encrypt(activite.getType()));
             values.put(ATTRIBUT_TEMPS, activite.getTemps());
             values.put(ATTRIBUT_REPETITION, 0);
             values.put(ATTRIBUT_SERIE, 0);
@@ -88,8 +91,8 @@ public class ActivitePersistence extends SQLiteOpenHelper {
 
             ContentValues values = new ContentValues();
             values.put(ATTRIBUT_PROGRAMME_ID, activite.getProgramme_id());
-            values.put(ATTRIBUT_TITRE, activite.getTitre());
-            values.put(ATTRIBUT_TYPE_ACTIVITE, activite.getType());
+            values.put(ATTRIBUT_TITRE,  mcrypt.byteArrayToHexString(mcrypt.encrypt(activite.getTitre())));
+            values.put(ATTRIBUT_TYPE_ACTIVITE,  mcrypt.byteArrayToHexString(mcrypt.encrypt(activite.getType())));
             values.put(ATTRIBUT_TEMPS, activite.getSerie());
             values.put(ATTRIBUT_REPETITION, activite.getRepetition());
             values.put(ATTRIBUT_SERIE, activite.getSerie());
@@ -113,11 +116,11 @@ public class ActivitePersistence extends SQLiteOpenHelper {
             if (cursor != null)
                 cursor.moveToFirst();
 
-            if(cursor.getString(3).equals("temps")){
-                ActiviteTemps activite = new ActiviteTemps(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),cursor.getString(2),Integer.parseInt(cursor.getString(4)));
+            if(new String (mcrypt.decrypt(cursor.getString(3))).trim().equals("temps")){
+                ActiviteTemps activite = new ActiviteTemps(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),new String (mcrypt.decrypt(cursor.getString(2))).trim(),Integer.parseInt(cursor.getString(4)));
                 return activite;
-            } else if(cursor.getString(3).equals("repetition")){
-                ActiviteRepetition activite = new ActiviteRepetition(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),cursor.getString(2),Integer.parseInt(cursor.getString(5)), Integer.parseInt(cursor.getString(6)));
+            } else if(new String (mcrypt.decrypt(cursor.getString(3))).trim().equals("repetition")){
+                ActiviteRepetition activite = new ActiviteRepetition(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),new String (mcrypt.decrypt(cursor.getString(2))).trim(),Integer.parseInt(cursor.getString(5)), Integer.parseInt(cursor.getString(6)));
                 return activite;
             }
 
@@ -129,30 +132,35 @@ public class ActivitePersistence extends SQLiteOpenHelper {
     }
 
     public ArrayList<Activite> getAllActivite() {
-        ArrayList<Activite> activiteList = new ArrayList<Activite>();
+        try {
+            ArrayList<Activite> activiteList = new ArrayList<Activite>();
 
-        // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_ACTIVITE;
+            // Select All Query
+            String selectQuery = "SELECT  * FROM " + TABLE_ACTIVITE;
 
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor cursor = db.rawQuery(selectQuery, null);
 
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                if(cursor.getString(3).equals("temps")){
-                    ActiviteTemps activite = new ActiviteTemps(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),cursor.getString(2),Integer.parseInt(cursor.getString(4)));
-                    activiteList.add(activite);
-                } else if(cursor.getString(3).equals("repetition")){
-                    ActiviteRepetition activite = new ActiviteRepetition(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),cursor.getString(2),Integer.parseInt(cursor.getString(5)), Integer.parseInt(cursor.getString(6)));
-                    activiteList.add(activite);
-                }
+            // looping through all rows and adding to list
+            if (cursor.moveToFirst()) {
+                do {
+                    if (new String(mcrypt.decrypt(cursor.getString(3))).trim().equals("temps")) {
+                        ActiviteTemps activite = new ActiviteTemps(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)), new String (mcrypt.decrypt(cursor.getString(2))).trim(), Integer.parseInt(cursor.getString(4)));
+                        activiteList.add(activite);
+                    } else if (new String(mcrypt.decrypt(cursor.getString(3))).trim().equals("repetition")) {
+                        ActiviteRepetition activite = new ActiviteRepetition(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)), new String(mcrypt.decrypt(cursor.getString(2))).trim(), Integer.parseInt(cursor.getString(5)), Integer.parseInt(cursor.getString(6)));
+                        activiteList.add(activite);
+                    }
 
-            } while (cursor.moveToNext());
+                } while (cursor.moveToNext());
+            }
+
+            // return contact list
+            return activiteList;
+        } catch (Exception e){
+            Log.e("BD", e.getMessage());
+            return null;
         }
-
-        // return contact list
-        return activiteList;
     }
 
     public ArrayList<Activite> getActiviteFromProgramme(int id) {
@@ -169,11 +177,11 @@ public class ActivitePersistence extends SQLiteOpenHelper {
 
             if (cursor.moveToFirst()) {
                 do {
-                    if(cursor.getString(3).equals("temps")){
-                        ActiviteTemps activite = new ActiviteTemps(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),cursor.getString(2),Integer.parseInt(cursor.getString(4)));
+                    if(new String (mcrypt.decrypt(cursor.getString(3))).trim().equals("temps")){
+                        ActiviteTemps activite = new ActiviteTemps(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),new String (mcrypt.decrypt(cursor.getString(2))).trim(),Integer.parseInt(cursor.getString(4)));
                         activiteList.add(activite);
-                    } else if(cursor.getString(3).equals("repetition")){
-                        ActiviteRepetition activite = new ActiviteRepetition(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),cursor.getString(2),Integer.parseInt(cursor.getString(5)), Integer.parseInt(cursor.getString(6)));
+                    } else if(new String (mcrypt.decrypt(cursor.getString(3))).trim().equals("repetition")){
+                        ActiviteRepetition activite = new ActiviteRepetition(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)), new String (mcrypt.decrypt(cursor.getString(2))).trim(),Integer.parseInt(cursor.getString(5)), Integer.parseInt(cursor.getString(6)));
                         activiteList.add(activite);
                     }
 
@@ -197,6 +205,7 @@ public class ActivitePersistence extends SQLiteOpenHelper {
     public void deleteTable() {
         try {
             SQLiteDatabase db = this.getWritableDatabase();
+            db.execSQL("delete from "+ TABLE_ACTIVITE);
             db.execSQL("DROP TABLE IF EXISTS "+ TABLE_ACTIVITE);
             Log.d("BD", "table activite supprime");
         }catch (Exception e){
