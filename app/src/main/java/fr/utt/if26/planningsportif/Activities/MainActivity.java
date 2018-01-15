@@ -23,7 +23,7 @@ import fr.utt.if26.planningsportif.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button go = null;
+    protected Button go;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,26 +33,30 @@ public class MainActivity extends AppCompatActivity {
 
         go = (Button)findViewById(R.id.btnGoMenu);
 
+        ActivitePersistence activitePersistence = new ActivitePersistence(getApplicationContext());
         ProgrammePersistence programmePersistence = new ProgrammePersistence(getApplicationContext());
         programmePersistence.deleteTable();
+        activitePersistence.deleteTable();
+
+        activitePersistence.onCreate(null);
         programmePersistence.onCreate(null);
 
-        Programme p = new Programme(1, "Adrian");
-        Programme prg = new Programme(2, "Hugo");
-
-        programmePersistence.addProgramme(p);
-        programmePersistence.addProgramme(prg);
-
-        Programme p2 = programmePersistence.getProgramme(1);
-        Log.d("BD", p2.getId() +" ");
-        Log.d("BD", p2.getDateCreation());
-
-       // Date date = new Date(Integer.parseInt(p.getDateCreation()));
-       // Log.d("BD", date.toString());
-
-        ArrayList listPrg = programmePersistence.getAllProgrammes();
-        Log.d("liste", listPrg.toString());
-        Log.d("liste", listPrg.size() +" ");
+//        Programme p = new Programme(1, "Adrian");
+//        Programme prg = new Programme(2, "Hugo");
+//
+//        programmePersistence.addProgramme(p);
+//        programmePersistence.addProgramme(prg);
+//
+//        Programme p2 = programmePersistence.getProgramme(1);
+//        Log.d("BD", p2.getId() +" ");
+//        Log.d("BD", p2.getDateCreation());
+//
+//       // Date date = new Date(Integer.parseInt(p.getDateCreation()));
+//       // Log.d("BD", date.toString());
+//
+//        ArrayList listPrg = programmePersistence.getAllProgrammes();
+//        Log.d("liste", listPrg.toString());
+//        Log.d("liste", listPrg.size() +" ");
 
 
 
@@ -65,8 +69,6 @@ public class MainActivity extends AppCompatActivity {
         Log.d("ac ajout", "ok");
 */
 
-        Log.d("Main activite","ok");
-
 
         btnCliqued();
 
@@ -76,9 +78,7 @@ public class MainActivity extends AppCompatActivity {
     private void btnCliqued() {
         go.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                //ANDROID SWITCH VIEW
-              //  Log.d("ee","ee");
-                Intent myIntent = new Intent(view.getContext(), MenuActivity.class); /** Class name here */
+                Intent myIntent = new Intent(view.getContext(), MenuActivity.class);
                 startActivityForResult(myIntent, 0);
             }
 

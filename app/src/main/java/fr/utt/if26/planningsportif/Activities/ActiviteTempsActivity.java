@@ -17,6 +17,8 @@ import java.io.Serializable;
 import fr.utt.if26.planningsportif.Modeles.ActiviteTemps;
 import fr.utt.if26.planningsportif.Modeles.Programme;
 import fr.utt.if26.planningsportif.Modeles.TypeProgramme;
+import fr.utt.if26.planningsportif.Persistence.ActivitePersistence;
+import fr.utt.if26.planningsportif.Persistence.ProgrammePersistence;
 import fr.utt.if26.planningsportif.R;
 
 public class ActiviteTempsActivity extends AppCompatActivity {
@@ -28,9 +30,13 @@ public class ActiviteTempsActivity extends AppCompatActivity {
     EditText tempsActivite;
     Button valider;
 
+    ActivitePersistence connexionBD;
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activite_temps);
+        connexionBD = new ActivitePersistence(this.getApplicationContext());
 
         programmeEnCours = (Programme) getIntent().getSerializableExtra("programmeEnCours");
         type = (TypeProgramme) getIntent().getSerializableExtra("type") ;
@@ -47,9 +53,9 @@ public class ActiviteTempsActivity extends AppCompatActivity {
                 String titre = titreActivite.getText().toString();
                 int temps = Integer.parseInt(tempsActivite.getText().toString());
 
-                ActiviteTemps activiteTps = new ActiviteTemps(1, 1, titre, temps);
-                Log.d("aa", "bb");
-                Log.d("cc", activiteTps.toString());
+
+
+                ActiviteTemps activiteTps = new ActiviteTemps(programmeEnCours.getListeActivites().size(), programmeEnCours.getId(), titre, temps);
 
                 programmeEnCours.ajouterActivite(activiteTps);
                 Log.d(programmeEnCours.toString(), "activité ajoutée");

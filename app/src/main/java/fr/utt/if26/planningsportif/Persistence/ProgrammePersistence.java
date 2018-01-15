@@ -12,6 +12,7 @@ import fr.utt.if26.planningsportif.Modeles.Programme;
 import fr.utt.if26.planningsportif.Modeles.TypeProgramme;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -28,12 +29,11 @@ public class ProgrammePersistence extends SQLiteOpenHelper {
     public static final String ATTRIBUT_TYPE = "typeprogramme";
     public static final String ATTRIBUT_DATE_CREATION = "creation";
 
-
+    ActivitePersistence activitePersistence;
 
     public ProgrammePersistence(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-
-
+        activitePersistence = new ActivitePersistence(context);
     }
 
     @Override
@@ -66,10 +66,14 @@ public class ProgrammePersistence extends SQLiteOpenHelper {
             SQLiteDatabase db = this.getWritableDatabase();
             this.onOpen(db);
 
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+            String formattedDate = df.format(c.getTime());
+
             ContentValues values = new ContentValues();
             values.put(ATTRIBUT_TITRE, programme.getTitre());
             values.put(ATTRIBUT_TYPE, programme.getType().toString());
-            values.put(ATTRIBUT_DATE_CREATION, programme.getDateCreation());
+            values.put(ATTRIBUT_DATE_CREATION, formattedDate);
 
             db.insert(TABLE_PROGRAMME, null, values);
             Log.d("BD", "programme insere");
@@ -113,7 +117,7 @@ public class ProgrammePersistence extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                Programme programme = new Programme(cursor.getInt(0), cursor.getString(1), TypeProgramme.valueOf(cursor.getString(2)), cursor.getString(3), null);
+                Programme programme = new Programme(cursor.getInt(0), cursor.getString(1), TypeProgramme.valueOf(cursor.getString(2)), cursor.getString(3), activitePersistence.getActiviteFromProgramme(cursor.getInt(0)));
                 // Adding contact to list
                 programmeList.add(programme);
             } while (cursor.moveToNext());

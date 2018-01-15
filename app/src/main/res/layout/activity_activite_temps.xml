@@ -12,14 +12,10 @@
         android:layout_height="495dp"
         android:gravity="center"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="15dp"
-        tools:layout_editor_absoluteY="-22dp">
+        tools:layout_editor_absoluteX="-4dp"
+        tools:layout_editor_absoluteY="8dp"
+        android:weightSum="1">
 
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="250dp"
-            android:layout_height="100dp"
-            android:text="Créer une nouvelle activité Temps" />
 
         <LinearLayout
             android:layout_width="150dp"
@@ -47,7 +43,8 @@
         <LinearLayout
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_weight="0.72">
 
             <TextView
                 android:id="@+id/textView10"
@@ -68,9 +65,10 @@
 
         <Button
             android:id="@+id/btnValiderActiviteTemps"
+            style="@android:style/Widget.Holo.Light.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/go" />
+            android:text="@string/ajoutActivite" />
 
     </LinearLayout>
 

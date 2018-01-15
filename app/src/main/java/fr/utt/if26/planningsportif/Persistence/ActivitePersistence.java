@@ -8,10 +8,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import fr.utt.if26.planningsportif.Modeles.Activite;
 import fr.utt.if26.planningsportif.Modeles.ActiviteRepetition;
 import fr.utt.if26.planningsportif.Modeles.ActiviteTemps;
+import fr.utt.if26.planningsportif.Modeles.Programme;
+import fr.utt.if26.planningsportif.Modeles.TypeProgramme;
 
 
 /**
@@ -41,7 +44,7 @@ public class ActivitePersistence extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db = this.getWritableDatabase();
         final String table_programme_create =
-                "CREATE TABLE "+ TABLE_ACTIVITE + "(" +
+                "CREATE TABLE IF NOT EXISTS "+ TABLE_ACTIVITE + "(" +
                         ATTRIBUT_ID + " INTEGER PRIMARY KEY, " +
                         ATTRIBUT_PROGRAMME_ID + " INTEGER, " +
                         ATTRIBUT_TITRE + " TEXT, " +
@@ -125,11 +128,80 @@ public class ActivitePersistence extends SQLiteOpenHelper {
         }
     }
 
+    public ArrayList<Activite> getAllActivite() {
+        ArrayList<Activite> activiteList = new ArrayList<Activite>();
+
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_ACTIVITE;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                if(cursor.getString(3).equals("temps")){
+                    ActiviteTemps activite = new ActiviteTemps(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),cursor.getString(2),Integer.parseInt(cursor.getString(4)));
+                    activiteList.add(activite);
+                } else if(cursor.getString(3).equals("repetition")){
+                    ActiviteRepetition activite = new ActiviteRepetition(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),cursor.getString(2),Integer.parseInt(cursor.getString(5)), Integer.parseInt(cursor.getString(6)));
+                    activiteList.add(activite);
+                }
+
+            } while (cursor.moveToNext());
+        }
+
+        // return contact list
+        return activiteList;
+    }
+
+    public ArrayList<Activite> getActiviteFromProgramme(int id) {
+        ArrayList<Activite> activiteList = new ArrayList<Activite>();
+
+        try {
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.query(TABLE_ACTIVITE, new String[]{ATTRIBUT_ID,
+                            ATTRIBUT_PROGRAMME_ID,ATTRIBUT_TITRE, ATTRIBUT_TYPE_ACTIVITE, ATTRIBUT_TEMPS, ATTRIBUT_REPETITION, ATTRIBUT_SERIE}, ATTRIBUT_PROGRAMME_ID + "=?",
+                    new String[]{String.valueOf(id)}, null, null, null, null);
+
+            if (cursor != null)
+                cursor.moveToFirst();
+
+            if (cursor.moveToFirst()) {
+                do {
+                    if(cursor.getString(3).equals("temps")){
+                        ActiviteTemps activite = new ActiviteTemps(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),cursor.getString(2),Integer.parseInt(cursor.getString(4)));
+                        activiteList.add(activite);
+                    } else if(cursor.getString(3).equals("repetition")){
+                        ActiviteRepetition activite = new ActiviteRepetition(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),cursor.getString(2),Integer.parseInt(cursor.getString(5)), Integer.parseInt(cursor.getString(6)));
+                        activiteList.add(activite);
+                    }
+
+                } while (cursor.moveToNext());
+            }
+
+            return activiteList;
+        } catch (Exception e){
+            Log.e("BD", e.getMessage());
+            return null;
+        }
+    }
+
     public void deleteActivite(Activite activite) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_PROGRAMME, ATTRIBUT_ID + " = ?",
                 new String[] { String.valueOf(activite.getId()) });
         db.close();
+    }
+
+    public void deleteTable() {
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            db.execSQL("DROP TABLE IF EXISTS "+ TABLE_ACTIVITE);
+            Log.d("BD", "table activite supprime");
+        }catch (Exception e){
+            Log.i("BD", e.getMessage());
+        }
     }
 
     @Override
@@ -140,4 +212,6 @@ public class ActivitePersistence extends SQLiteOpenHelper {
             db.execSQL("PRAGMA foreign_keys=ON;");
         }
     }
+
+
 }

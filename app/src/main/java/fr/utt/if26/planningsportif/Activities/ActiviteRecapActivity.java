@@ -13,11 +13,14 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import fr.utt.if26.planningsportif.Modeles.Activite;
+import fr.utt.if26.planningsportif.Modeles.ActiviteRepetition;
 import fr.utt.if26.planningsportif.Modeles.ActiviteTemps;
 import fr.utt.if26.planningsportif.Modeles.Programme;
 import fr.utt.if26.planningsportif.Modeles.TypeProgramme;
+import fr.utt.if26.planningsportif.Persistence.ActivitePersistence;
 import fr.utt.if26.planningsportif.Persistence.ProgrammePersistence;
 import fr.utt.if26.planningsportif.R;
 
@@ -31,11 +34,16 @@ public class ActiviteRecapActivity extends AppCompatActivity  {
     ActiviteTemps  activite;
     ArrayList<ActiviteTemps> listActivite;
 
+    ProgrammePersistence programmePersistence;
+    ActivitePersistence activitePersistence;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activite_recap);
+
+        programmePersistence = new ProgrammePersistence(this.getApplicationContext());
+        activitePersistence = new ActivitePersistence(this.getApplicationContext());
 
         Log.d("va ds create", "ok");
         mListView = (ListView) findViewById(R.id.listView2);
@@ -62,13 +70,24 @@ public class ActiviteRecapActivity extends AppCompatActivity  {
               @Override
               public void onClick(View view) {
 
-                  Toast.makeText(getApplicationContext(), "Programme enregistré ! :)", Toast.LENGTH_LONG).show();
+                  Toast.makeText(getApplicationContext(), "Programme enregistré !", Toast.LENGTH_LONG).show();
 
-                  //FAIRE LA SAUVEGARDE DANS LA BDD !!
+                  programmePersistence.addProgramme(programmeEnCours);
+
+                  for (Iterator<Activite> i = programmeEnCours.getListeActivites().iterator(); i.hasNext();) {
+                      Activite item = i.next();
+
+                      if(item instanceof  ActiviteTemps){
+                          ActiviteTemps activite = new ActiviteTemps(item.getId(), item.getProgramme_id(), item.getTitre(), ((ActiviteTemps) item).getTemps());
+                          activitePersistence.addActiviteTemps(activite);
+                      } else if(item instanceof ActiviteRepetition){
+                          ActiviteRepetition activite = new ActiviteRepetition(item.getId(), item.getProgramme_id(), item.getTitre(), ((ActiviteRepetition) item).getRepetition(), ((ActiviteRepetition) item).getSerie());
+                          activitePersistence.addActiviteRepetition(activite);
+                      }
+
+                  }
 
                   Intent myIntent = new Intent(view.getContext(), MenuActivity.class);
-                 // myIntent.putExtra("type", type); //TYPE ACTIVITE
-                 // myIntent.putExtra("programmeEnCours", programmeEnCours);
                   startActivityForResult(myIntent, 0);
               }
           });

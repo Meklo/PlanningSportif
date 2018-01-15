@@ -7,75 +7,55 @@
     android:orientation="vertical"
     tools:context="fr.utt.if26.planningsportif.Activities.MenuActivity">
 
+
     <LinearLayout
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_weight="0.65"
         android:orientation="horizontal"
-        tools:context="fr.utt.if26.planningsportif.Activities.MenuActivity">
+        tools:context="fr.utt.if26.planningsportif.Activities.MenuActivity"
+        android:weightSum="1">
 
 
-        <Button
-            android:id="@+id/listProgrammeBtnMenu"
-            android:layout_width="50dp"
-            android:layout_height="150dp"
-            android:layout_weight="1"
-            android:text="@string/listProgrammeBtnMenu" />
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="55dp"
-            android:layout_height="150dp"
-            app:srcCompat="@android:drawable/ic_menu_sort_by_size" />
 
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="360dp"
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_weight="0.65"
+        android:layout_weight="0.04"
         android:orientation="horizontal"
-        tools:context="fr.utt.if26.planningsportif.Activities.MenuActivity">
+        tools:context="fr.utt.if26.planningsportif.Activities.MenuActivity"
+        android:weightSum="1">
+
         <Button
             android:id="@+id/nouveauProgrammeBtnMenu"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_weight="0.65"
+            android:layout_width="123dp"
+            android:layout_height="match_parent"
             android:text="@string/nouveauProgrammeBtnMenu" />
+
 
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="55dp"
-            android:layout_height="150dp"
+            android:layout_width="40dp"
+            android:layout_height="70dp"
             app:srcCompat="@android:drawable/ic_menu_add" />
 
 
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="360dp"
-        android:layout_height="50dp"
-        android:layout_weight="0.65"
-        android:orientation="horizontal"
-        tools:context="fr.utt.if26.planningsportif.Activities.MenuActivity">
-
         <Button
-            android:id="@+id/aideBtnMenu"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_weight="0.65"
-            android:text="@string/aideBtnMenu" />
-
+            android:id="@+id/listProgrammeBtnMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="72dp"
+            android:text="@string/listProgrammeBtnMenu" />
 
         <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="55dp"
-            android:layout_height="150dp"
-            app:srcCompat="@android:drawable/ic_menu_help" />
-
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="73dp"
+            app:srcCompat="@android:drawable/ic_menu_sort_by_size" />
 
     </LinearLayout>
 

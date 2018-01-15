@@ -9,8 +9,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import fr.utt.if26.planningsportif.Modeles.Activite;
 import fr.utt.if26.planningsportif.Modeles.Programme;
 import fr.utt.if26.planningsportif.Modeles.TypeProgramme;
+import fr.utt.if26.planningsportif.Persistence.ProgrammePersistence;
 import fr.utt.if26.planningsportif.R;
 
 public class NouveauProgrammeActivity extends AppCompatActivity {
@@ -24,12 +28,16 @@ public class NouveauProgrammeActivity extends AppCompatActivity {
     ImageButton natation;
 
     TypeProgramme type = null;
+    ProgrammePersistence connexionBD;
 
     EditText titreEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        connexionBD = new ProgrammePersistence(this.getApplicationContext());
+
         setContentView(R.layout.activity_nouveau_programme);
 
         validerNewProg = (Button) findViewById(R.id.validerProgrammeBtnNouveauProg);
@@ -104,7 +112,8 @@ public class NouveauProgrammeActivity extends AppCompatActivity {
                 if (type != null){
                     //try {
                         String titre = titreEdit.getText().toString();
-                        Programme p = new Programme(1, titre); //INSERER PROGRAMME DS BDD;
+                        int programmeID = connexionBD.getAllProgrammes().size()+1;
+                        Programme p = new Programme(programmeID, titre, type, null, new ArrayList<Activite>());
 
                         // Toast.makeText(getApplicationContext(), "Programme créé  !", Toast.LENGTH_LONG).show();
 

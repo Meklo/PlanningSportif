@@ -19,6 +19,7 @@ import fr.utt.if26.planningsportif.Modeles.ActiviteRepetition;
 import fr.utt.if26.planningsportif.Modeles.ActiviteTemps;
 import fr.utt.if26.planningsportif.Modeles.Programme;
 import fr.utt.if26.planningsportif.Modeles.TypeProgramme;
+import fr.utt.if26.planningsportif.Persistence.ActivitePersistence;
 import fr.utt.if26.planningsportif.R;
 
 
@@ -33,9 +34,14 @@ public class ActiviteRepetitionActivity extends AppCompatActivity  {
 
     Button valider;
 
+    ActivitePersistence connexionBD;
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activite_repetition);
+        connexionBD = new ActivitePersistence(this.getApplicationContext());
+
 
         programmeEnCours = (Programme) getIntent().getSerializableExtra("programmeEnCours");
         type = (TypeProgramme) getIntent().getSerializableExtra("type") ;
@@ -53,8 +59,10 @@ public class ActiviteRepetitionActivity extends AppCompatActivity  {
                 int repet = Integer.parseInt(repetActivite.getText().toString());
                 int serie = Integer.parseInt(serieActivite.getText().toString());
 
-                ActiviteRepetition activiteRepet = new ActiviteRepetition(1,1, titre, repet, serie); //CHOPER ID DU PROGRAMME EN COURS
-               // Log.d("aa", "bb");
+                int activiteId = connexionBD.getAllActivite().size() +1;
+
+                ActiviteRepetition activiteRepet = new ActiviteRepetition(programmeEnCours.getListeActivites().size(), programmeEnCours.getId(), titre, repet, serie); //CHOPER ID DU PROGRAMME EN COURS
+
                 Log.d("cc", activiteRepet.toString());
 
                 programmeEnCours.ajouterActivite(activiteRepet);
