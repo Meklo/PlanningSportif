@@ -28,7 +28,7 @@ public class ActiviteTemps extends Activite implements Serializable{
     public String toString() {
         String  msg = new String();
         msg = super.toString();
-        msg += " temps : " + temps;
+        msg += " Pendant " + temps + " seconde(s)\n \r";
         return msg;
     }
 }

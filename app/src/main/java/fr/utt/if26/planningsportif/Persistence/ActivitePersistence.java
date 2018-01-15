@@ -72,8 +72,8 @@ public class ActivitePersistence extends SQLiteOpenHelper {
 
             ContentValues values = new ContentValues();
             values.put(ATTRIBUT_PROGRAMME_ID, activite.getProgramme_id());
-            values.put(ATTRIBUT_TITRE, mcrypt.encrypt(activite.getTitre()));
-            values.put(ATTRIBUT_TYPE_ACTIVITE, mcrypt.encrypt(activite.getType()));
+            values.put(ATTRIBUT_TITRE, mcrypt.byteArrayToHexString(mcrypt.encrypt(activite.getTitre())));
+            values.put(ATTRIBUT_TYPE_ACTIVITE, mcrypt.byteArrayToHexString(mcrypt.encrypt(activite.getType())));
             values.put(ATTRIBUT_TEMPS, activite.getTemps());
             values.put(ATTRIBUT_REPETITION, 0);
             values.put(ATTRIBUT_SERIE, 0);
@@ -91,8 +91,8 @@ public class ActivitePersistence extends SQLiteOpenHelper {
 
             ContentValues values = new ContentValues();
             values.put(ATTRIBUT_PROGRAMME_ID, activite.getProgramme_id());
-            values.put(ATTRIBUT_TITRE,  mcrypt.byteArrayToHexString(mcrypt.encrypt(activite.getTitre())));
-            values.put(ATTRIBUT_TYPE_ACTIVITE,  mcrypt.byteArrayToHexString(mcrypt.encrypt(activite.getType())));
+            values.put(ATTRIBUT_TITRE,  mcrypt.byteArrayToHexString(mcrypt.encrypt(activite.getTitre())).trim());
+            values.put(ATTRIBUT_TYPE_ACTIVITE,  mcrypt.byteArrayToHexString(mcrypt.encrypt(activite.getType())).trim());
             values.put(ATTRIBUT_TEMPS, activite.getSerie());
             values.put(ATTRIBUT_REPETITION, activite.getRepetition());
             values.put(ATTRIBUT_SERIE, activite.getSerie());
@@ -190,7 +190,7 @@ public class ActivitePersistence extends SQLiteOpenHelper {
 
             return activiteList;
         } catch (Exception e){
-            Log.e("BD", e.getMessage());
+            Log.e("BD Activite", e.getMessage());
             return null;
         }
     }

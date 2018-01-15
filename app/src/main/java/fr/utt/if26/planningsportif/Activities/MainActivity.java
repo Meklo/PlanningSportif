@@ -35,8 +35,9 @@ public class MainActivity extends AppCompatActivity {
 
         ActivitePersistence activitePersistence = new ActivitePersistence(getApplicationContext());
         ProgrammePersistence programmePersistence = new ProgrammePersistence(getApplicationContext());
-        programmePersistence.deleteTable();
-        activitePersistence.deleteTable();
+        //activitePersistence.deleteTable();
+        //programmePersistence.deleteTable();
+
 
         activitePersistence.onCreate(null);
         programmePersistence.onCreate(null);

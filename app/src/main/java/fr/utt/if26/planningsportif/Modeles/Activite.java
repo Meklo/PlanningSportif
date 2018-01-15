@@ -38,7 +38,7 @@ public abstract class Activite implements Serializable{
     }
 
     public String toString(){
-        return id +") "+ titre + " - ";
+        return  titre + " :";
     } //POSSIBILITe DE SUPPRIMER L ID POUR UN MEILLEUR RENDU
 
     public String getType() {

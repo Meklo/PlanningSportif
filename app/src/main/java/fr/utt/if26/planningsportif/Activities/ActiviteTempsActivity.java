@@ -50,22 +50,28 @@ public class ActiviteTempsActivity extends AppCompatActivity {
         valider.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String titre = titreActivite.getText().toString();
-                int temps = Integer.parseInt(tempsActivite.getText().toString());
 
 
+                if( !titreActivite.getText().toString().equals("") && Integer.parseInt(tempsActivite.getText().toString()) >= 0 && !tempsActivite.getText().toString().equals("")) {
 
-                ActiviteTemps activiteTps = new ActiviteTemps(programmeEnCours.getListeActivites().size(), programmeEnCours.getId(), titre, temps);
+                    String titre = titreActivite.getText().toString();
+                    int temps = Integer.parseInt(tempsActivite.getText().toString());
 
-                programmeEnCours.ajouterActivite(activiteTps);
-                Log.d(programmeEnCours.toString(), "activité ajoutée");
-                Toast.makeText(getApplicationContext(), "Activité ajoutée !", Toast.LENGTH_LONG).show();
+                    ActiviteTemps activiteTps = new ActiviteTemps(programmeEnCours.getListeActivites().size(), programmeEnCours.getId(), titre, temps);
+
+                    programmeEnCours.ajouterActivite(activiteTps);
+                    Log.d(programmeEnCours.toString(), "activité ajoutée");
+                    Toast.makeText(getApplicationContext(), "Activité ajoutée !", Toast.LENGTH_LONG).show();
 
 
-                Intent myIntent = new Intent(view.getContext(), ChoixActiviteActivity.class);
-                myIntent.putExtra("type", type); //TYPE ACTIVITE
-                myIntent.putExtra("programmeEnCours", programmeEnCours);
-                 startActivityForResult(myIntent, 0);
+                    Intent myIntent = new Intent(view.getContext(), ChoixActiviteActivity.class);
+                    myIntent.putExtra("type", type); //TYPE ACTIVITE
+                    myIntent.putExtra("programmeEnCours", programmeEnCours);
+                    startActivityForResult(myIntent, 0);
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Veuillez renseigner correctement le titre et le temps", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });

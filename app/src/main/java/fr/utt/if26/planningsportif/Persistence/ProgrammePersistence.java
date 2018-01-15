@@ -74,8 +74,8 @@ public class ProgrammePersistence extends SQLiteOpenHelper {
             String formattedDate = df.format(c.getTime());
 
             ContentValues values = new ContentValues();
-            values.put(ATTRIBUT_TITRE,  mcrypt.byteArrayToHexString(mcrypt.encrypt(programme.getTitre())));
-            values.put(ATTRIBUT_TYPE, mcrypt.byteArrayToHexString(mcrypt.encrypt(programme.getType().toString())));
+            values.put(ATTRIBUT_TITRE,  mcrypt.byteArrayToHexString(mcrypt.encrypt(programme.getTitre())).trim());
+            values.put(ATTRIBUT_TYPE, mcrypt.byteArrayToHexString(mcrypt.encrypt(programme.getType().toString())).trim());
             values.put(ATTRIBUT_DATE_CREATION, formattedDate);
 
             db.insert(TABLE_PROGRAMME, null, values);

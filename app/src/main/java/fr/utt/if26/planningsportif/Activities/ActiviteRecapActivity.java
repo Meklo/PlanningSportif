@@ -72,6 +72,7 @@ public class ActiviteRecapActivity extends AppCompatActivity  {
 
                   Toast.makeText(getApplicationContext(), "Programme enregistré !", Toast.LENGTH_LONG).show();
 
+
                   programmePersistence.addProgramme(programmeEnCours);
 
                   for (Iterator<Activite> i = programmeEnCours.getListeActivites().iterator(); i.hasNext();) {

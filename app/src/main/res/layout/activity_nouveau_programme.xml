@@ -42,8 +42,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Titre" />
+                android:hint="Titre"
+                android:inputType="textPersonName" />
 
         </LinearLayout>
 

@@ -109,7 +109,7 @@ public class NouveauProgrammeActivity extends AppCompatActivity {
             public void onClick(View view){
                 //L'utilisateur sélectionne un sport --> changement de page
                // if (sportSelectionne > -1 && sportSelectionne < 6) {
-                if (type != null){
+                if (type != null && !titreEdit.getText().toString().equals("")){
                     //try {
                         String titre = titreEdit.getText().toString();
                         int programmeID = connexionBD.getAllProgrammes().size()+1;
@@ -125,7 +125,7 @@ public class NouveauProgrammeActivity extends AppCompatActivity {
                 }
                 //L'utilisateur n'a pas sélectionné de sport --> retour sur la page
                 else {
-                    Toast.makeText(getApplicationContext(), "Veuillez sélectionner un sport svp", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Veuillez renseigner le type et le nom du programme", Toast.LENGTH_SHORT).show();
                 }
             }
 

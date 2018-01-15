@@ -55,24 +55,30 @@ public class ActiviteRepetitionActivity extends AppCompatActivity  {
         valider.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String titre = titreActivite.getText().toString();
-                int repet = Integer.parseInt(repetActivite.getText().toString());
-                int serie = Integer.parseInt(serieActivite.getText().toString());
 
-                int activiteId = connexionBD.getAllActivite().size() +1;
+                if(!titreActivite.getText().toString().equals("") && !repetActivite.getText().toString().equals("") && !repetActivite.getText().toString().equals("") && Integer.parseInt(repetActivite.getText().toString()) >= 0 && Integer.parseInt(serieActivite.getText().toString()) >= 0) {
+                    String titre = titreActivite.getText().toString();
+                    int repet = Integer.parseInt(repetActivite.getText().toString());
+                    int serie = Integer.parseInt(serieActivite.getText().toString());
 
-                ActiviteRepetition activiteRepet = new ActiviteRepetition(programmeEnCours.getListeActivites().size(), programmeEnCours.getId(), titre, repet, serie); //CHOPER ID DU PROGRAMME EN COURS
+                    int activiteId = connexionBD.getAllActivite().size() + 1;
 
-                Log.d("cc", activiteRepet.toString());
+                    ActiviteRepetition activiteRepet = new ActiviteRepetition(programmeEnCours.getListeActivites().size(), programmeEnCours.getId(), titre, repet, serie); //CHOPER ID DU PROGRAMME EN COURS
 
-                programmeEnCours.ajouterActivite(activiteRepet);
-                //Log.d("activité ajoutée", "activité ajoutée");
-                Toast.makeText(getApplicationContext(), "Activité ajoutée !", Toast.LENGTH_LONG).show();
+                    Log.d("cc", activiteRepet.toString());
 
-                Intent myIntent = new Intent(view.getContext(), ChoixActiviteActivity.class);
-                myIntent.putExtra("type", type); //TYPE ACTIVITE
-                myIntent.putExtra("programmeEnCours", programmeEnCours);
-                startActivityForResult(myIntent, 0);
+                    programmeEnCours.ajouterActivite(activiteRepet);
+                    //Log.d("activité ajoutée", "activité ajoutée");
+                    Toast.makeText(getApplicationContext(), "Activité ajoutée !", Toast.LENGTH_LONG).show();
+
+                    Intent myIntent = new Intent(view.getContext(), ChoixActiviteActivity.class);
+                    myIntent.putExtra("type", type); //TYPE ACTIVITE
+                    myIntent.putExtra("programmeEnCours", programmeEnCours);
+                    startActivityForResult(myIntent, 0);
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Veuillez renseigner correctement le titre, la nombre de série et de répétition", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });

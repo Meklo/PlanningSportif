@@ -38,7 +38,7 @@ public class ActiviteRepetition extends Activite {
     public String toString() {
         String  msg = new String();
         msg = super.toString();
-        msg += " repetition : " + repetition +" série : " + serie;
+        msg += " Effectuer " + serie +" série(s) de  " + repetition + " répétition(s)\n \r";
         return msg;
     }
 }
